@@ -1,0 +1,38 @@
+/* Style for the dashboard container */
+.container-fluid {
+    padding: 0;
+  }
+  
+  /* Style for the cards */
+  .card {
+    height: 100%;
+  }
+  
+  /* Add some margin and padding to create spacing between cards */
+  .card + .card {
+    margin-top: 20px;
+  }
+  
+  /* Style for the "View Details" button */
+  .card-footer {
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #444;
+  }
+  
+  /* Center the "View Details" text */
+  .card-footer span {
+    display: block;
+    text-align: center;
+  }
+  
+  /* Style for the icon */
+  .card-footer i {
+    font-size: 1.5rem;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+  

@@ -1,0 +1,41 @@
+/* Pembimbing.css */
+
+/* Atur latar belakang form */
+.form-container {
+  background-color: #f2f2f2; /* Ganti warna sesuai keinginan Anda */
+  padding: 20px; /* Atur padding sesuai keinginan Anda */
+  border-radius: 10px; /* Atur radius border sesuai keinginan Anda */
+}
+
+/* Atur latar belakang modal */
+.modal-container {
+  background-color: #f2f2f2; /* Ganti warna sesuai keinginan Anda */
+  padding: 20px; /* Atur padding sesuai keinginan Anda */
+  border-radius: 10px; /* Atur radius border sesuai keinginan Anda */
+}
+
+/* Atur warna teks, dll. */
+.form-label {
+  color: #333; /* Ganti warna teks sesuai keinginan Anda */
+}
+
+.form-control {
+  border: 1px solid #ccc; /* Ganti warna border sesuai keinginan Anda */
+}
+
+/* Atur warna tombol */
+.btn-primary {
+  background-color: #007bff; /* Ganti warna sesuai keinginan Anda */
+}
+
+.btn-danger {
+  background-color: #dc3545; /* Ganti warna sesuai keinginan Anda */
+}
+
+.btn-success {
+  background-color: #28a745; /* Ganti warna sesuai keinginan Anda */
+}
+.judulHalaman{
+  background-color: #1D3752;
+  color: #fff;
+}

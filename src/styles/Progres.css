@@ -1,0 +1,25 @@
+.warnabackground{
+    background-color: #1D3752;
+}
+
+.judul-form{
+    font-weight: 700;
+    font-size: 24px;
+    font-style: normal;
+}
+
+.badan {
+    height: 100%;
+    width: 100%;
+    background-color: #1D3752;
+    padding-top: 3%;
+}
+
+.warnacont {
+    background-color: rgb(238, 234, 229);
+}
+
+.font-body-table {
+    font-size: 16px;
+}
+
