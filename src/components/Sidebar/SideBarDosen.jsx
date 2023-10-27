@@ -19,19 +19,19 @@ const routes = [
   },
   {
     path: "/permintaan",
-    name: "Permintaan Pembimbing",
+    name: "Permintaan",
     icon: <AssignmentIndIcon />,
   },
   {
     path: "/dosenprogres",
-    name: "Dosen Progress TA",
+    name: "Progres TA ",
     icon: <ViewTimelineIcon />,
   },
-  {
-    path: "/dosensemhas",
-    name: "Penguji Semhas",
-    icon: <CoPresentIcon />,
-  },
+  // {
+  //   path: "/dosensemhas",
+  //   name: "Penguji Semhas",
+  //   icon: <CoPresentIcon />,
+  // },
   // {
   //   path: "/file-manager",
   //   name: "File Manager",
@@ -54,11 +54,11 @@ const routes = [
   //     },
   //   ],
   // },
-  {
-    path: "/dosensidang",
-    name: "Penguji Sidang Akhir",
-    icon: <SchoolIcon />,
-  },
+  // {
+  //   path: "/dosensidang",
+  //   name: "Penguji Sidang Akhir",
+  //   icon: <SchoolIcon />,
+  // },
   {
     path: "/settings",
     name: "Pengaturan",

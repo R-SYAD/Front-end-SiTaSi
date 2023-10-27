@@ -27,11 +27,11 @@ const routes = [
     name: "Progress TA",
     icon: <ViewTimelineIcon />,
   },
-  {
-    path: "/semhas",
-    name: "Semhas",
-    icon: <CoPresentIcon />,
-  },
+  // {
+  //   path: "/semhas",
+  //   name: "Semhas",
+  //   icon: <CoPresentIcon />,
+  // },
   // {
   //   path: "/file-manager",
   //   name: "File Manager",
@@ -54,11 +54,11 @@ const routes = [
   //     },
   //   ],
   // },
-  {
-    path: "/sidang",
-    name: "Sidang Akhir",
-    icon: <SchoolIcon />,
-  },
+  // {
+  //   path: "/sidang",
+  //   name: "Sidang Akhir",
+  //   icon: <SchoolIcon />,
+  // },
   {
     path: "/settings",
     name: "Pengaturan",

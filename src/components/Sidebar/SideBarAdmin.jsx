@@ -22,11 +22,11 @@ const routes = [
     name: "Dosen",
     icon: <AssignmentIndIcon />,
   },
-  {
-    path: "/dosensemhas",
-    name: "Semhas",
-    icon: <CoPresentIcon />,
-  },
+  // {
+  //   path: "/dosensemhas",
+  //   name: "Semhas",
+  //   icon: <CoPresentIcon />,
+  // },
   // {
   //   path: "/file-manager",
   //   name: "File Manager",
@@ -49,11 +49,11 @@ const routes = [
   //     },
   //   ],
   // },
-  {
-    path: "/dosensidang",
-    name: "Sidang Akhir",
-    icon: <SchoolIcon />,
-  },
+  // {
+  //   path: "/dosensidang",
+  //   name: "Sidang Akhir",
+  //   icon: <SchoolIcon />,
+  // },
   {
     path: "/settings",
     name: "Pengaturan",
@@ -61,8 +61,8 @@ const routes = [
     exact: true,
     subRoutes: [
       {
-        path: "/settings/dosenprofile",
-        name: "Profil Dosen ",
+        path: "/settings/adminprofile",
+        name: "Profil Admin ",
         icon: <FaUser />,
       },
       {
