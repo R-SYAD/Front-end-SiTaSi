@@ -18,10 +18,42 @@ const Progres = () => {
   const handleShow = () => setShow(true);
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault(); // Mencegah submit bawaan formulir
-    // Lakukan apa pun yang perlu Anda lakukan dengan data formulir di sini
-    // Tutup modal jika berhasil, misalnya setShow(false)
+  // Fungsi untuk mengunggah file dan deskripsi ke backend
+  const uploadFile = async (file, description) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file); // "file" adalah nama field di backend
+      formData.append("description", description); // "description" adalah nama field di backend
+
+      const response = await fetch("URL_BACKEND", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        // Berhasil mengunggah file dan deskripsi
+        console.log("Upload berhasil");
+      } else {
+        // Gagal mengunggah file
+        console.error("Gagal mengunggah file");
+      }
+    } catch (error) {
+      // Terjadi kesalahan selama fetch request
+      console.error("Terjadi kesalahan:", error);
+    }
+  };
+
+  // Event handler untuk menghandle submit form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const description = e.target.elements.desc.value; // Ambil nilai deskripsi dari form
+
+    if (selectedFile && description) {
+      // Panggil fungsi uploadFile dengan file dan description
+      await uploadFile(selectedFile, description);
+    } else {
+      console.error("File dan deskripsi harus diisi.");
+    }
   };
 
   const handleFileChange = (event) => {
@@ -36,11 +68,6 @@ const Progres = () => {
           <Col md={3}>
             <h3>Progres TA</h3>
           </Col>
-          <Col md={{ span: 2, offset: 7 }}>
-            <Button variant="primary" onClick={handleShow}>
-              Add
-            </Button>
-          </Col>
         </Row>
       </Container>
       <Container className="form-container">
@@ -54,25 +81,243 @@ const Progres = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody className="font-body-table"></tbody>
+            <tbody className="font-body-table">
+              <tr>
+                <td>
+                  <b>Pendahuluan</b>
+                </td>
+                <td></td> {/* Isi tanggal pengajuan Pendahuluan di sini */}
+                <td></td> {/* Isi status Pendahuluan di sini */}
+                <td>
+                  {" "}
+                  <td>
+                    <Button
+                      variant="primary"
+                      style={{ marginRight: "10px" }}
+                      onClick={handleShow}
+                    >
+                      Tambah
+                    </Button>
+                    <Button variant="warning" style={{ marginRight: "10px" }}>
+                      Edit
+                    </Button>
+                    <Button variant="danger" style={{ marginRight: "10px" }}>
+                      Hapus
+                    </Button>
+                  </td>
+                </td>{" "}
+                {/* Isi action Pendahuluan di sini */}
+              </tr>
+              <tr>
+                <td>
+                  <b>BAB I</b>
+                </td>
+                <td></td> {/* Isi tanggal pengajuan BAB I di sini */}
+                <td></td> {/* Isi status BAB I di sini */}
+                <td>
+                  <td>
+                    <Button
+                      variant="primary"
+                      style={{ marginRight: "10px" }}
+                      onClick={handleShow}
+                    >
+                      Tambah
+                    </Button>
+                    <Button variant="warning" style={{ marginRight: "10px" }}>
+                      Edit
+                    </Button>
+                    <Button variant="danger" style={{ marginRight: "10px" }}>
+                      Hapus
+                    </Button>
+                  </td>
+                </td>{" "}
+                {/* Isi action BAB I di sini */}
+              </tr>
+              <tr>
+                <td>
+                  <b>BAB II</b>
+                </td>
+                <td> </td> {/* Isi tanggal pengajuan BAB II di sini */}
+                <td> </td> {/* Isi status BAB II di sini */}
+                <td>
+                  {" "}
+                  <td>
+                    <Button
+                      variant="primary"
+                      style={{ marginRight: "10px" }}
+                      onClick={handleShow}
+                    >
+                      Tambah
+                    </Button>
+                    <Button variant="warning" style={{ marginRight: "10px" }}>
+                      Edit
+                    </Button>
+                    <Button variant="danger" style={{ marginRight: "10px" }}>
+                      Hapus
+                    </Button>
+                  </td>
+                </td>{" "}
+                {/* Isi action BAB II di sini */}
+              </tr>
+              <tr>
+                <td>
+                  <b>BAB III</b>
+                </td>
+                <td> </td> {/* Isi tanggal pengajuan BAB III di sini */}
+                <td> </td> {/* Isi status BAB III di sini */}
+                <td>
+                  {" "}
+                  <td>
+                    <Button
+                      variant="primary"
+                      style={{ marginRight: "10px" }}
+                      onClick={handleShow}
+                    >
+                      Tambah
+                    </Button>
+                    <Button variant="warning" style={{ marginRight: "10px" }}>
+                      Edit
+                    </Button>
+                    <Button variant="danger" style={{ marginRight: "10px" }}>
+                      Hapus
+                    </Button>
+                  </td>
+                </td>{" "}
+                {/* Isi action BAB III di sini */}
+              </tr>
+              <tr>
+                <td>
+                  <b>BAB IV</b>
+                </td>
+                <td> </td> {/* Isi tanggal pengajuan BAB III di sini */}
+                <td> </td> {/* Isi status BAB III di sini */}
+                <td>
+                  {" "}
+                  <td>
+                    <Button
+                      variant="primary"
+                      style={{ marginRight: "10px" }}
+                      onClick={handleShow}
+                    >
+                      Tambah
+                    </Button>
+                    <Button variant="warning" style={{ marginRight: "10px" }}>
+                      Edit
+                    </Button>
+                    <Button variant="danger" style={{ marginRight: "10px" }}>
+                      Hapus
+                    </Button>
+                  </td>
+                </td>{" "}
+                {/* Isi action BAB III di sini */}
+              </tr>
+              <tr>
+                <td>
+                  <b>BAB V</b>
+                </td>
+                <td> </td> {/* Isi tanggal pengajuan BAB III di sini */}
+                <td> </td> {/* Isi status BAB III di sini */}
+                <td>
+                  {" "}
+                  <td>
+                    <Button
+                      variant="primary"
+                      style={{ marginRight: "10px" }}
+                      onClick={handleShow}
+                    >
+                      Tambah
+                    </Button>
+                    <Button variant="warning" style={{ marginRight: "10px" }}>
+                      Edit
+                    </Button>
+                    <Button variant="danger" style={{ marginRight: "10px" }}>
+                      Hapus
+                    </Button>
+                  </td>
+                </td>{" "}
+                {/* Isi action BAB III di sini */}
+              </tr>
+              <tr>
+                <td>
+                  <b>BAB VI</b>
+                </td>
+                <td> </td> {/* Isi tanggal pengajuan BAB III di sini */}
+                <td> </td> {/* Isi status BAB III di sini */}
+                <td>
+                  {" "}
+                  <td>
+                    <Button
+                      variant="primary"
+                      style={{ marginRight: "10px" }}
+                      onClick={handleShow}
+                    >
+                      Tambah
+                    </Button>
+                    <Button variant="warning" style={{ marginRight: "10px" }}>
+                      Edit
+                    </Button>
+                    <Button variant="danger" style={{ marginRight: "10px" }}>
+                      Hapus
+                    </Button>
+                  </td>
+                </td>{" "}
+                {/* Isi action BAB III di sini */}
+              </tr>
+              <tr>
+                <td>
+                  <b>BAB VII</b>
+                </td>
+                <td> </td> {/* Isi tanggal pengajuan BAB III di sini */}
+                <td> </td> {/* Isi status BAB III di sini */}
+                <td>
+                  {" "}
+                  <td>
+                    <Button
+                      variant="primary"
+                      style={{ marginRight: "10px" }}
+                      onClick={handleShow}
+                    >
+                      Tambah
+                    </Button>
+                    <Button variant="warning" style={{ marginRight: "10px" }}>
+                      Edit
+                    </Button>
+                    <Button variant="danger" style={{ marginRight: "10px" }}>
+                      Hapus
+                    </Button>
+                  </td>
+                </td>{" "}
+                {/* Isi action BAB III di sini */}
+              </tr>
+              <tr>
+                <td>
+                  <b>BAB VIII</b>
+                </td>
+                <td> </td> {/* Isi tanggal pengajuan BAB III di sini */}
+                <td> </td> {/* Isi status BAB III di sini */}
+                <td>
+                  {" "}
+                  <td>
+                    <Button
+                      variant="primary"
+                      style={{ marginRight: "10px" }}
+                      onClick={handleShow}
+                    >
+                      Tambah
+                    </Button>
+                    <Button variant="warning" style={{ marginRight: "10px" }}>
+                      Edit
+                    </Button>
+                    <Button variant="danger" style={{ marginRight: "10px" }}>
+                      Hapus
+                    </Button>
+                  </td>
+                </td>{" "}
+                {/* Isi action BAB III di sini */}
+              </tr>
+            </tbody>
           </Table>
           <p className="has-text-centered has-text-danger"></p>
-          <nav
-            className="pagination is-centered"
-            role="navigation"
-            aria-label="pagination"
-          >
-            <ReactPaginate
-              previousLabel={"< Prev"}
-              nextLabel={"Next >"}
-              containerClassName={"pagination-list"}
-              pageLinkClassName={"pagination-link"}
-              previousLinkClassName={"pagination-previous"}
-              nextLinkClassName={"pagination-next"}
-              activeLinkClassName={"pagination-link is-current"}
-              disabledLinkClassName={"pagination-link is-disabled"}
-            />
-          </nav>
         </Container>
       </Container>
 
@@ -81,11 +326,13 @@ const Progres = () => {
           <Modal.Title>Add New Form</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formName">
               <Form.Label>Upload Progres TA</Form.Label>
               <div className="d-flex align-items-center">
-                <span className="mr-2">{selectedFile && selectedFile}</span>
+                <span className="mr-2">
+                  {selectedFile && selectedFile.name}
+                </span>
                 <label className="custom-file-upload">
                   <input type="file" onChange={handleFileChange} />
                 </label>
@@ -93,12 +340,7 @@ const Progres = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formDescription">
               <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                placeholder="Description"
-                name="desc"
-                rows={3}
-              />
+              <Form.Control as="textarea" name="desc" rows={3} />
             </Form.Group>
           </Form>
         </Modal.Body>

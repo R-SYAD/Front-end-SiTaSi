@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Form, Modal } from "react-bootstrap";
 import "../styles/Pembimbing.css";
 
@@ -6,11 +6,74 @@ const Pembimbing = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [selectedPembimbing, setSelectedPembimbing] = useState(null);
+  const [selectedPembimbing, setSelectedPembimbing] = useState("");
+  const [dosenList, setDosenList] = useState([]); // Menambah state untuk daftar pembimbing
+  const [judulTugasAkhir, setJudulTugasAkhir] = useState("");
+  const [deskripsiTugasAkhir, setDeskripsiTugasAkhir] = useState("");
 
-  const handleAddPembimbing = (pembimbing) => {
-    setSelectedPembimbing(pembimbing);
+  useEffect(() => {
+    // Ganti URL_API dengan URL endpoint yang sesuai pada backend Anda
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/pilihdosbing");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setDosenList(data); // Mengisi daftar pembimbing dari data backend
+        console.log(data);
+      } catch (err) {
+        console.error("Error fetching data: ", err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleAddPembimbing = (dosen) => {
+    setSelectedPembimbing(dosen);
     handleClose();
+  };
+
+  const handleSubmit = () => {
+    if (!selectedPembimbing || !judulTugasAkhir || !deskripsiTugasAkhir) {
+      alert("Harap lengkapi semua bidang sebelum mengajukan.");
+      return;
+    }
+    // Data yang akan dikirim ke server
+    const formData = {
+      judul: judulTugasAkhir,
+      idDosbing: selectedPembimbing, // Menyamakan dengan nama req.body di server
+      detailIde: deskripsiTugasAkhir,
+    };
+
+    // Konfigurasi request
+    const requestOptions = {
+      method: "POST", // Ganti dengan metode HTTP yang sesuai (POST, PUT, dll.)
+      headers: {
+        "Content-Type": "application/json", // Ganti sesuai dengan format data yang Anda kirim
+      },
+      body: JSON.stringify(formData), // Mengubah data menjadi JSON
+    };
+
+    // Ganti URL_API dengan URL endpoint yang sesuai pada backend Anda
+    fetch("http://localhost:3000/pilihdosbing", requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json(); // Anda dapat menghapus ini jika tidak ada respons yang perlu diproses
+      })
+      .then((data) => {
+        // Response dari server (jika ada)
+        console.log(data);
+        // Tambahkan logika untuk menangani respons dari server, seperti menampilkan pesan sukses
+      })
+      .catch((error) => {
+        console.error("Error submitting data: ", error);
+        console.log(error);
+        // Tambahkan logika untuk menangani kesalahan, seperti menampilkan pesan kesalahan
+      });
   };
 
   return (
@@ -42,7 +105,13 @@ const Pembimbing = () => {
           </Form.Group>
           <Form.Group className="mb-3" controlId="formName">
             <Form.Label className="form-label">Judul Tugas Akhir</Form.Label>
-            <Form.Control type="text" placeholder="Form Name" />
+            <Form.Control
+              type="text"
+              placeholder="Judul Tugas Akhir"
+              value={judulTugasAkhir}
+              onChange={(e) => setJudulTugasAkhir(e.target.value)}
+              name="judulTugasAkhir" // Tambahkan name untuk mengaitkan dengan req.body
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formDescription">
             <Form.Label className="form-label">
@@ -50,16 +119,21 @@ const Pembimbing = () => {
             </Form.Label>
             <Form.Control
               as="textarea"
-              placeholder="Description"
-              name="desc"
+              placeholder="Deskripsi Tugas Akhir"
+              name="deskripsiTugasAkhir" // Tambahkan name untuk mengaitkan dengan req.body
               rows={3}
+              value={deskripsiTugasAkhir}
+              onChange={(e) => setDeskripsiTugasAkhir(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formDescription">
+          <Form.Group className="mb-3" controlId="formStatus">
             <Form.Label className="form-label">Status</Form.Label>
             <Form.Control disabled />
           </Form.Group>
-          <Button variant="success">Ajukan Pembimbing</Button>
+          {/* Kemudian panggil handleSubmit() pada tombol "Ajukan Pembimbing" onClick seperti ini:*/}
+          <Button variant="success" onClick={handleSubmit}>
+            Ajukan Pembimbing
+          </Button>
           <Button variant="danger" onClick={handleClose}>
             Cancel
           </Button>
@@ -80,10 +154,16 @@ const Pembimbing = () => {
                 <Form.Control
                   as="select"
                   onChange={(e) => handleAddPembimbing(e.target.value)}
+                  value={selectedPembimbing}
                 >
-                  <option value="Pembimbing 1">Pembimbing 1</option>
-                  <option value="Pembimbing 2">Pembimbing 2</option>
-                  <option value="Pembimbing 3">Pembimbing 3</option>
+                  <option value="">Select Pembimbing</option>
+                  {dosenList &&
+                    dosenList.dosenData &&
+                    dosenList.dosenData.map((dosen) => (
+                      <option key={dosen.nip} value={dosen.nip}>
+                        {dosen.nama_dosen}
+                      </option>
+                    ))}
                 </Form.Control>
               </Form.Group>
             </Form>

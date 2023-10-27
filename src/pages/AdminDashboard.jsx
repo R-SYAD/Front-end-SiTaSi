@@ -3,7 +3,7 @@ import "../styles/Dashboard.css";
 import { Container, Row, Col, Button, Form, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-const Dashboard = () => {
+const DashboardAdmin = () => {
   const navigate = useNavigate();
 
   const handleViewDetails = (route) => {
@@ -86,4 +86,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardAdmin;

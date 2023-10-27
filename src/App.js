@@ -1,17 +1,25 @@
 import "./App.css";
 import SideBar from "./components/Sidebar/SideBar";
+import SideBarDosen from "./components/Sidebar/SideBarDosen";
+import SideBarAdmin from "./components/Sidebar/SideBarAdmin";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Dashboard from "./pages/Dashboard";
 import Pembimbing from "./pages/Pembimbing";
 import Semhas from "./pages/Semhas";
 import Sidang from "./pages/Sidang";
-import Order from "./pages/Order";
-import Saved from "./pages/Saved";
+import DosenDashboard from "./pages/DosenDashboard";
+import AdminDosen from "./pages/AdminDosen";
+import AdminDashboard from "./pages/AdminDashboard";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Progres from "./pages/Progres";
+import PermintaanPembimbing from "./pages/DosenPermintaanPembimbing";
+import DosenProgresTA from "./pages/DosenProgresTA";
+import DosenSemhas from "./pages/DosenSemhas";
+import DosenSidang from "./pages/DosenSidang";
+import DosenProfile from "./pages/DosenProfile";
 
 function App() {
   return (
@@ -27,13 +35,33 @@ function App() {
           <Route path="/progres" element={<Progres />} />
           <Route path="/sidang" element={<Sidang />} />
           <Route path="/semhas" element={<Semhas />} />
-          <Route path="/order" element={<Order />} />
-          <Route path="/saved" element={<Saved />} />
           <Route path="/settings/profile" element={<Profile />} />
 
           <Route path="*" element={<> not found</>} />
         </Routes>
       </SideBar>
+
+      {/* <SideBarDosen>
+        <Routes>
+          <Route path="/dashboard" element={<DosenDashboard />} />
+          <Route path="/permintaan" element={<PermintaanPembimbing />} />
+          <Route path="/dosenprogres" element={<DosenProgresTA />} />
+          <Route path="/dosensidang" element={<DosenSidang />} />
+          <Route path="/dosensemhas" element={<DosenSemhas />} />
+          <Route path="/settings/dosenprofile" element={<DosenProfile />} />
+
+          <Route path="*" element={<> not found</>} />
+        </Routes>
+      </SideBarDosen>
+
+      <SideBarAdmin>
+        <Routes>
+          <Route path="/admindashboard" element={<AdminDashboard />} />
+          <Route path="/admin" element={<AdminDosen />} />
+
+          <Route path="*" element={<> not found</>} />
+        </Routes>
+      </SideBarAdmin> */}
     </Router>
   );
 }

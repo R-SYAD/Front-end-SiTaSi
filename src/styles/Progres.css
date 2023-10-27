@@ -13,13 +13,37 @@
     width: 100%;
     background-color: #1D3752;
     padding-top: 3%;
+    overflow-y: hidden;
 }
+thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff; /* Atur latar belakang judul tabel sesuai kebutuhan */
+    z-index: 1; /* Membuat judul tetap di atas isi tabel */
+  }
 
 .warnacont {
     background-color: rgb(238, 234, 229);
-}
+    max-height: 500px; /* Atur tinggi maksimum tabel */
+    overflow-y: auto; /* Aktifkan scroll vertikal jika konten melebihi tinggi maksimum */
+  }
 
 .font-body-table {
     font-size: 16px;
 }
-
+/* CSS untuk warna tombol-tombol */
+.btn-tambah {
+    background-color: green; /* Warna latar belakang hijau */
+    color: white; /* Warna teks putih */
+  }
+  
+  .btn-edit {
+    background-color: orange; /* Warna latar belakang oranye */
+    color: white; /* Warna teks putih */
+  }
+  
+  .btn-hapus {
+    background-color: red; /* Warna latar belakang merah */
+    color: white; /* Warna teks putih */
+  }
+  
