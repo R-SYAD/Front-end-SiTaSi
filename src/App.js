@@ -23,7 +23,8 @@ import DosenProfile from "./pages/DosenProfile";
 
 function App() {
   // Anda perlu menentukan tipe pengguna berdasarkan kondisi atau informasi dari backend
-  const userType = "admin"; // Gantilah dengan tipe pengguna yang sesuai
+  const userType = sessionStorage.getItem("userType");
+ // Gantilah dengan tipe pengguna yang sesuai
 
   return (
     <Router>
@@ -37,7 +38,7 @@ function App() {
     <SideBar>
 
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/home" element={<Dashboard />} />
         <Route path="/pembimbing" element={<Pembimbing />} />
         <Route path="/progres" element={<Progres />} />
         <Route path="/sidang" element={<Sidang />} />
@@ -53,7 +54,7 @@ function App() {
           <SideBarDosen>
 
         <Routes>
-          <Route path="/dashboard" element={<DosenDashboard />} />
+          <Route path="/dosen-home" element={<DosenDashboard />} />
           <Route path="/permintaan" element={<PermintaanPembimbing />} />
           <Route path="/dosenprogres" element={<DosenProgresTA />} />
           <Route path="/dosensidang" element={<DosenSidang />} />
@@ -69,7 +70,7 @@ function App() {
         <SideBarAdmin>
 
         <Routes>
-          <Route path="/admindashboard" element={<AdminDashboard />} />
+          <Route path="/admin-home" element={<AdminDashboard />} />
           <Route path="/admin" element={<AdminDosen />} />
 
           <Route path="*" element={<>not found</>} />
