@@ -15,14 +15,7 @@ import "../styles/Progres.css";
 const PermintaanPembimbing = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault(); // Mencegah submit bawaan formulir
-    // Lakukan apa pun yang perlu Anda lakukan dengan data formulir di sini
-    // Tutup modal jika berhasil, misalnya setShow(false)
-  };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
