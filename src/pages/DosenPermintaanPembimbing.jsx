@@ -36,11 +36,6 @@ const PermintaanPembimbing = () => {
           <Col md={3}>
             <h3>Permintaan Pembimbing</h3>
           </Col>
-          <Col md={{ span: 2, offset: 7 }}>
-            <Button variant="primary" onClick={handleShow}>
-              Tambah
-            </Button>
-          </Col>
         </Row>
       </Container>
       <Container className="form-container">

@@ -25,7 +25,7 @@ const DashboardDosen = () => {
           <div className="row">
             <div className="col-md-6 mb-3">
               <div className="card bg-primary text-white h-100">
-                <div className="card-body py-5">Pembimbing</div>
+                <div className="card-body py-5">Permintaan Pembimbing</div>
                 <div
                   className="card-footer d-flex"
                   onClick={() => handleViewDetails("/pembimbing")}
@@ -39,7 +39,7 @@ const DashboardDosen = () => {
             </div>
             <div className="col-md-6 mb-3">
               <div className="card bg-warning text-dark h-100">
-                <div className="card-body py-5">Progres TA</div>
+                <div className="card-body py-5">Check Progres TA</div>
                 <div
                   className="card-footer d-flex"
                   onClick={() => handleViewDetails("/progres")}
@@ -51,7 +51,7 @@ const DashboardDosen = () => {
                 </div>
               </div>
             </div>
-            <div className="col-md-6 mb-3">
+            {/* <div className="col-md-6 mb-3">
               <div className="card bg-success text-white h-100">
                 <div className="card-body py-5">Seminar Hasil</div>
                 <div
@@ -78,7 +78,7 @@ const DashboardDosen = () => {
                   </span>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </Container>

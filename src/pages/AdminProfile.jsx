@@ -18,7 +18,7 @@ import axios from "axios";
 import profilePhoto from "../assets/images/profile.svg";
 import pPhoto from "../assets/images/photo.png";
 
-const DosenProfile = () => {
+const Profile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const [editMode, setEditMode] = useState(false);
@@ -31,7 +31,7 @@ const DosenProfile = () => {
   }, []);
   const fetchProfileData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/users/profile");
+      const response = await axios.get("http://localhost:3000/profile");
       const userData = response.data;
       console.log(userData[0]);
       setName(userData[0].name);
@@ -65,7 +65,7 @@ const DosenProfile = () => {
       };
 
       const res = await fetch(
-        "http://localhost:3000/users/edit",
+        "http://localhost:3000/editprofile",
         requestOptions
       );
       const result = await res.json();
@@ -82,7 +82,7 @@ const DosenProfile = () => {
   const handleSave = async () => {
     setEditMode(false);
     try {
-      const response = await axios.post("http://localhost:3000/users/edit", {
+      const response = await axios.post("http://localhost:3000/editprofile", {
         name,
         nip,
         email,
@@ -414,4 +414,4 @@ const DosenProfile = () => {
   );
 };
 
-export default DosenProfile;
+export default Profile;

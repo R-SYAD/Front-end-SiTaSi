@@ -11,6 +11,7 @@ import Sidang from "./pages/Sidang";
 import DosenDashboard from "./pages/DosenDashboard";
 import AdminDosen from "./pages/AdminDosen";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminProfile from "./pages/AdminProfile";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -23,7 +24,7 @@ import DosenProfile from "./pages/DosenProfile";
 
 function App() {
   // Anda perlu menentukan tipe pengguna berdasarkan kondisi atau informasi dari backend
-  const userType = "admin"; // Gantilah dengan tipe pengguna yang sesuai
+  const userType = "dosen"; // Gantilah dengan tipe pengguna yang sesuai
 
   return (
     <Router>
@@ -32,48 +33,45 @@ function App() {
         <Route path="/register" element={<Register />} />
       </Routes>
 
-      {userType === "mahasiswa" &&(
-      
-    <SideBar>
+      {userType === "mahasiswa" && (
+        <SideBar>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/pembimbing" element={<Pembimbing />} />
+            <Route path="/progres" element={<Progres />} />
+            <Route path="/sidang" element={<Sidang />} />
+            <Route path="/semhas" element={<Semhas />} />
+            <Route path="/settings/profile" element={<Profile />} />
 
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/pembimbing" element={<Pembimbing />} />
-        <Route path="/progres" element={<Progres />} />
-        <Route path="/sidang" element={<Sidang />} />
-        <Route path="/semhas" element={<Semhas />} />
-        <Route path="/settings/profile" element={<Profile />} />
-
-        <Route path="*" element={<>not found</>} />
-      </Routes>
-    </SideBar>
+            <Route path="*" element={<>not found</>} />
+          </Routes>
+        </SideBar>
       )}
 
-      {userType === "dosen"  &&(
-          <SideBarDosen>
+      {userType === "dosen" && (
+        <SideBarDosen>
+          <Routes>
+            <Route path="/dashboard" element={<DosenDashboard />} />
+            <Route path="/permintaan" element={<PermintaanPembimbing />} />
+            <Route path="/dosenprogres" element={<DosenProgresTA />} />
+            <Route path="/dosensidang" element={<DosenSidang />} />
+            <Route path="/dosensemhas" element={<DosenSemhas />} />
+            <Route path="/settings/dosenprofile" element={<DosenProfile />} />
 
-        <Routes>
-          <Route path="/dashboard" element={<DosenDashboard />} />
-          <Route path="/permintaan" element={<PermintaanPembimbing />} />
-          <Route path="/dosenprogres" element={<DosenProgresTA />} />
-          <Route path="/dosensidang" element={<DosenSidang />} />
-          <Route path="/dosensemhas" element={<DosenSemhas />} />
-          <Route path="/settings/dosenprofile" element={<DosenProfile />} />
-
-          <Route path="*" element={<>not found</>} />
-        </Routes>
-          </SideBarDosen>
+            <Route path="*" element={<>not found</>} />
+          </Routes>
+        </SideBarDosen>
       )}
 
       {userType === "admin" && (
         <SideBarAdmin>
+          <Routes>
+            <Route path="/admindashboard" element={<AdminDashboard />} />
+            <Route path="/admin" element={<AdminDosen />} />
+            <Route path="/settings/adminprofile" element={<AdminProfile />} />
 
-        <Routes>
-          <Route path="/admindashboard" element={<AdminDashboard />} />
-          <Route path="/admin" element={<AdminDosen />} />
-
-          <Route path="*" element={<>not found</>} />
-        </Routes>
+            <Route path="*" element={<>not found</>} />
+          </Routes>
         </SideBarAdmin>
       )}
     </Router>

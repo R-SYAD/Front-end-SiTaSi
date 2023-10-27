@@ -25,7 +25,7 @@ const Progres = () => {
       formData.append("file", file); // "file" adalah nama field di backend
       formData.append("description", description); // "description" adalah nama field di backend
 
-      const response = await fetch("URL_BACKEND", {
+      const response = await fetch("http://localhost:3000/upprogres", {
         method: "POST",
         body: formData,
       });
@@ -82,32 +82,6 @@ const Progres = () => {
               </tr>
             </thead>
             <tbody className="font-body-table">
-              <tr>
-                <td>
-                  <b>Pendahuluan</b>
-                </td>
-                <td></td> {/* Isi tanggal pengajuan Pendahuluan di sini */}
-                <td></td> {/* Isi status Pendahuluan di sini */}
-                <td>
-                  {" "}
-                  <td>
-                    <Button
-                      variant="primary"
-                      style={{ marginRight: "10px" }}
-                      onClick={handleShow}
-                    >
-                      Tambah
-                    </Button>
-                    <Button variant="warning" style={{ marginRight: "10px" }}>
-                      Edit
-                    </Button>
-                    <Button variant="danger" style={{ marginRight: "10px" }}>
-                      Hapus
-                    </Button>
-                  </td>
-                </td>{" "}
-                {/* Isi action Pendahuluan di sini */}
-              </tr>
               <tr>
                 <td>
                   <b>BAB I</b>
