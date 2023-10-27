@@ -23,7 +23,6 @@ const Progres = () => {
     try {
       const formData = new FormData();
       formData.append("file", file); // "file" adalah nama field di backend
-      formData.append("description", description); // "description" adalah nama field di backend
 
       const response = await fetch("URL_BACKEND", {
         method: "POST",
@@ -82,32 +81,7 @@ const Progres = () => {
               </tr>
             </thead>
             <tbody className="font-body-table">
-              <tr>
-                <td>
-                  <b>Pendahuluan</b>
-                </td>
-                <td></td> {/* Isi tanggal pengajuan Pendahuluan di sini */}
-                <td></td> {/* Isi status Pendahuluan di sini */}
-                <td>
-                  {" "}
-                  <td>
-                    <Button
-                      variant="primary"
-                      style={{ marginRight: "10px" }}
-                      onClick={handleShow}
-                    >
-                      Tambah
-                    </Button>
-                    <Button variant="warning" style={{ marginRight: "10px" }}>
-                      Edit
-                    </Button>
-                    <Button variant="danger" style={{ marginRight: "10px" }}>
-                      Hapus
-                    </Button>
-                  </td>
-                </td>{" "}
-                {/* Isi action Pendahuluan di sini */}
-              </tr>
+              
               <tr>
                 <td>
                   <b>BAB I</b>
@@ -263,58 +237,8 @@ const Progres = () => {
                 </td>{" "}
                 {/* Isi action BAB III di sini */}
               </tr>
-              <tr>
-                <td>
-                  <b>BAB VII</b>
-                </td>
-                <td> </td> {/* Isi tanggal pengajuan BAB III di sini */}
-                <td> </td> {/* Isi status BAB III di sini */}
-                <td>
-                  {" "}
-                  <td>
-                    <Button
-                      variant="primary"
-                      style={{ marginRight: "10px" }}
-                      onClick={handleShow}
-                    >
-                      Tambah
-                    </Button>
-                    <Button variant="warning" style={{ marginRight: "10px" }}>
-                      Edit
-                    </Button>
-                    <Button variant="danger" style={{ marginRight: "10px" }}>
-                      Hapus
-                    </Button>
-                  </td>
-                </td>{" "}
-                {/* Isi action BAB III di sini */}
-              </tr>
-              <tr>
-                <td>
-                  <b>BAB VIII</b>
-                </td>
-                <td> </td> {/* Isi tanggal pengajuan BAB III di sini */}
-                <td> </td> {/* Isi status BAB III di sini */}
-                <td>
-                  {" "}
-                  <td>
-                    <Button
-                      variant="primary"
-                      style={{ marginRight: "10px" }}
-                      onClick={handleShow}
-                    >
-                      Tambah
-                    </Button>
-                    <Button variant="warning" style={{ marginRight: "10px" }}>
-                      Edit
-                    </Button>
-                    <Button variant="danger" style={{ marginRight: "10px" }}>
-                      Hapus
-                    </Button>
-                  </td>
-                </td>{" "}
-                {/* Isi action BAB III di sini */}
-              </tr>
+              
+              
             </tbody>
           </Table>
           <p className="has-text-centered has-text-danger"></p>
@@ -338,10 +262,7 @@ const Progres = () => {
                 </label>
               </div>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formDescription">
-              <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" name="desc" rows={3} />
-            </Form.Group>
+            
           </Form>
         </Modal.Body>
         <Modal.Footer>
