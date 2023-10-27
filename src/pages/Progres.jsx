@@ -15,7 +15,14 @@ import "../styles/Progres.css";
 const Progres = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShowBABI = () => setShow(true);
+  const handleShowBABII = () => setShow(true);
+  const handleShowBABIII = () => setShow(true);
+  const handleShowBABIV = () => setShow(true);
+  const handleShowBABV = () => setShow(true);
+  const handleShowBABVI = () => setShow(true);
+  const handleShowBABVII = () => setShow(true);
+  const handleShowBABVIII = () => setShow(true);
   const [selectedFile, setSelectedFile] = useState(null);
 
   // Fungsi untuk mengunggah file dan deskripsi ke backend
@@ -93,7 +100,7 @@ const Progres = () => {
                     <Button
                       variant="primary"
                       style={{ marginRight: "10px" }}
-                      onClick={handleShow}
+                      onClick={handleShowBABI}
                     >
                       Tambah
                     </Button>
@@ -119,7 +126,7 @@ const Progres = () => {
                     <Button
                       variant="primary"
                       style={{ marginRight: "10px" }}
-                      onClick={handleShow}
+                      onClick={handleShowBABII}
                     >
                       Tambah
                     </Button>
@@ -145,7 +152,7 @@ const Progres = () => {
                     <Button
                       variant="primary"
                       style={{ marginRight: "10px" }}
-                      onClick={handleShow}
+                      onClick={handleShowBABIII}
                     >
                       Tambah
                     </Button>
@@ -171,7 +178,7 @@ const Progres = () => {
                     <Button
                       variant="primary"
                       style={{ marginRight: "10px" }}
-                      onClick={handleShow}
+                      onClick={handleShowBABIV}
                     >
                       Tambah
                     </Button>
@@ -197,7 +204,7 @@ const Progres = () => {
                     <Button
                       variant="primary"
                       style={{ marginRight: "10px" }}
-                      onClick={handleShow}
+                      onClick={handleShowBABV}
                     >
                       Tambah
                     </Button>
@@ -223,7 +230,7 @@ const Progres = () => {
                     <Button
                       variant="primary"
                       style={{ marginRight: "10px" }}
-                      onClick={handleShow}
+                      onClick={handleShowBABVI}
                     >
                       Tambah
                     </Button>
@@ -249,7 +256,7 @@ const Progres = () => {
                     <Button
                       variant="primary"
                       style={{ marginRight: "10px" }}
-                      onClick={handleShow}
+                      onClick={handleShowBABVII}
                     >
                       Tambah
                     </Button>
@@ -275,7 +282,7 @@ const Progres = () => {
                     <Button
                       variant="primary"
                       style={{ marginRight: "10px" }}
-                      onClick={handleShow}
+                      onClick={handleShowBABVIII}
                     >
                       Tambah
                     </Button>
@@ -301,6 +308,10 @@ const Progres = () => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formBab">
+              <Form.Label>Description</Form.Label>
+              <Form.Control as="textarea" name="desc" rows={3} />
+            </Form.Group>
             <Form.Group className="mb-3" controlId="formName">
               <Form.Label>Upload Progres TA</Form.Label>
               <div className="d-flex align-items-center">

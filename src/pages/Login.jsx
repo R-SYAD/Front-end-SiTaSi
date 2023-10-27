@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "../styles/Login.css";
 
 const Login = () => {
@@ -7,15 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    // Periksa apakah pengguna sudah dalam sesi login
-    const isLoggedIn = sessionStorage.getItem("isLoggedIn");
-    if (isLoggedIn === "true") {
-      // Pengguna sudah login, arahkan ke halaman utama
-      window.location.replace("/");
-    }
-  }, []);
+  const navigate = useNavigate(); // Gunakan useNavigate untuk pengalihan
 
   const handleNomorIndukChange = (e) => {
     setNomorInduk(e.target.value);
@@ -37,18 +30,31 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
-      const data = await res.json();
 
-      if (data.success) {
-        // Simpan status login dalam session
-        sessionStorage.setItem("isLoggedIn", "true");
-        // Redirect ke halaman utama
-        window.location.replace("/");
+      if (res.ok) {
+        const data = await res.json();
+
+        if (data.success) {
+          // Simpan token dan userType dalam sessionStorage
+          sessionStorage.setItem("accessToken", data.token);
+          sessionStorage.setItem("userType", data.user);
+          console.log(data)
+          // Redirect ke halaman berdasarkan userType
+          if (data.user === "mahasiswa") {
+            navigate("/home");
+          } else if (data.user === "dosen") {
+            navigate("/dosen-home");
+          } else if (data.user === "admin") {
+            navigate("/admin-home");
+          }
+        } else {
+          setError(data.message);
+        }
       } else {
-        setError(data.message);
+        throw new Error("Network response was not ok");
       }
     } catch (err) {
-      console.log(err);
+      setError("Network error, please try again later.");
     } finally {
       setIsLoading(false);
     }
