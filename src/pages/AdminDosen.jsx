@@ -14,14 +14,68 @@ import "../styles/Progres.css";
 
 const AdminDosen = () => {
   const [show, setShow] = useState(false);
+  const [dosenData, setDosenData] = useState([]); // State untuk data dosen
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [formData, setFormData] = useState({
+    nip: "",
+    namaDosen: "",
+    jeniskelamin: "Laki-laki",
+    kuotaDosbing: 1,
+    password: "",
+  });
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault(); // Mencegah submit bawaan formulir
-    // Lakukan apa pun yang perlu Anda lakukan dengan data formulir di sini
-    // Tutup modal jika berhasil, misalnya setShow(false)
+  useEffect(() => {
+    try {
+      // Mengambil data dosen dari backend
+      fetch("http://localhost:3000/listdosen")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.dosen && data.dosen.length > 0) {
+            // Periksa apakah data.dosen ada dan berisi setidaknya satu entitas dosen
+            setDosenData(data.dosen);
+          } else {
+            console.log("Data dosen tidak ditemukan");
+            // Handle kasus di mana data dosen tidak ditemukan
+            // Anda dapat menampilkan pesan atau mengambil tindakan lain yang sesuai
+          }
+        })
+        .catch((error) => console.error("Error fetching data:", error.message));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, []);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:3000/tambahAkunDosen", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Akun Dosen telah terbuat:", data);
+        // Lakukan tindakan yang sesuai, misalnya menutup modal
+        handleClose();
+      } else {
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("Error saving data:", error);
+      // Handle error, tampilkan pesan kesalahan, dsb.
+    }
   };
 
   const handleFileChange = (event) => {
@@ -29,12 +83,20 @@ const AdminDosen = () => {
     setSelectedFile(file);
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   return (
     <div className="badan">
       <Container className="judulHalaman">
         <Row className="mb-3">
           <Col md={3}>
-            <h3>Progres TA</h3>
+            <h2>Dosen</h2>
           </Col>
           <Col md={{ span: 2, offset: 7 }}>
             <Button variant="primary" onClick={handleShow}>
@@ -44,17 +106,24 @@ const AdminDosen = () => {
         </Row>
       </Container>
       <Container className="form-container">
-        <Container className=" warnacont">
+        <Container className="warnacont">
           <Table striped hover>
             <thead>
               <tr>
                 <th>Nama Dosen</th>
                 <th>NIP</th>
-                <th>Jenis Kelamin </th>
-                <th>Action</th>
+                <th>Jenis Kelamin</th>
               </tr>
             </thead>
-            <tbody className="font-body-table"></tbody>
+            <tbody className="font-body-table">
+              {dosenData.map((dosen) => (
+                <tr key={dosen.nip}>
+                  <td>{dosen.nama_dosen}</td>
+                  <td>{dosen.nip}</td>
+                  <td>{dosen.jenis_kelamin}</td>
+                </tr>
+              ))}
+            </tbody>
           </Table>
           <p className="has-text-centered has-text-danger"></p>
           <nav
@@ -78,32 +147,74 @@ const AdminDosen = () => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Form</Modal.Title>
+          <Modal.Title>Add New Dosen Account</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="formName">
-              <Form.Label>Upload Progres TA</Form.Label>
-              <div className="d-flex align-items-center">
-                <span className="mr-2">{selectedFile && selectedFile}</span>
-                <label className="custom-file-upload">
-                  <input type="file" onChange={handleFileChange} />
-                </label>
-              </div>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formDescription">
-              <Form.Label>Description</Form.Label>
+            <Form.Group className="mb-3" controlId="nip">
+              <Form.Label>NIP</Form.Label>
               <Form.Control
-                as="textarea"
-                placeholder="Description"
-                name="desc"
-                rows={3}
+                type="text"
+                name="nip"
+                placeholder="Enter NIP"
+                required
+                value={formData.nip}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="namaDosen">
+              <Form.Label>Nama Dosen</Form.Label>
+              <Form.Control
+                type="text"
+                name="namaDosen"
+                placeholder="Enter Nama Dosen"
+                required
+                value={formData.namaDosen}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="jeniskelamin">
+              <Form.Label>Jenis Kelamin</Form.Label>
+              <Form.Control
+                as="select"
+                name="jeniskelamin"
+                required
+                value={formData.jeniskelamin}
+                onChange={handleInputChange}
+              >
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="kuotaDosbing">
+              <Form.Label>Kuota Dosbing (1-10)</Form.Label>
+              <Form.Control
+                type="number"
+                name="kuotaDosbing"
+                min="1"
+                max="10"
+                required
+                value={formData.kuotaDosbing}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder="Enter Password"
+                required
+                value={formData.password}
+                onChange={handleInputChange}
               />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success">Save Changes</Button>
+          <Button variant="success" onClick={handleFormSubmit}>
+            Save Changes
+          </Button>
           <Button variant="danger" onClick={handleClose}>
             Cancel
           </Button>
