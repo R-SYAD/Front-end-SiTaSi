@@ -13,7 +13,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 const routes = [
   {
-    path: "/dosen-home",
+    path: "/dashboard",
     name: "Dashboard",
     icon: <HomeIcon />,
   },

@@ -14,6 +14,7 @@ import "../styles/Progres.css";
 
 const PermintaanPembimbing = () => {
   const [show, setShow] = useState(false);
+  const [mahasiswaData, setMahasiswaData] = useState([]); // State untuk menyimpan data mahasiswa
   const handleClose = () => setShow(false);
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -21,6 +22,28 @@ const PermintaanPembimbing = () => {
     const file = event.target.files[0];
     setSelectedFile(file);
   };
+
+  // Fungsi untuk mengambil data dari backend
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/requestdosbing"); // Ganti dengan URL yang sesuai
+      if (!response.ok) {
+        throw new Error("Gagal mengambil data dari server");
+      }
+
+      const data = await response.json();
+      setMahasiswaData(data.bimbingan);
+      console.log(data.bimbingan);
+    } catch (error) {
+      console.error("Terdapat masalah:", error);
+      // Tangani kesalahan yang mungkin terjadi di sini
+    }
+  };
+
+  // Panggil fetchData saat komponen dimuat
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="badan">
@@ -32,7 +55,7 @@ const PermintaanPembimbing = () => {
         </Row>
       </Container>
       <Container className="form-container">
-        <Container className=" warnacont">
+        <Container className="warnacont">
           <Table striped hover>
             <thead>
               <tr>
@@ -42,7 +65,18 @@ const PermintaanPembimbing = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody className="font-body-table"></tbody>
+            <tbody className="font-body-table">
+              {mahasiswaData.map((mahasiswa, index) => (
+                <tr key={index}>
+                  <td>{mahasiswa.nama}</td>
+                  <td>{mahasiswa.nim}</td>
+                  <td>{mahasiswa.status}</td>
+                  <td>
+                    <Button>Detail</Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </Table>
           <p className="has-text-centered has-text-danger"></p>
           <nav
@@ -73,7 +107,9 @@ const PermintaanPembimbing = () => {
             <Form.Group className="mb-3" controlId="formName">
               <Form.Label>Upload Progres TA</Form.Label>
               <div className="d-flex align-items-center">
-                <span className="mr-2">{selectedFile && selectedFile}</span>
+                <span className="mr-2">
+                  {selectedFile && selectedFile.name}
+                </span>
                 <label className="custom-file-upload">
                   <input type="file" onChange={handleFileChange} />
                 </label>

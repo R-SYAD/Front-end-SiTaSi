@@ -11,7 +11,6 @@ import Sidang from "./pages/Sidang";
 import DosenDashboard from "./pages/DosenDashboard";
 import AdminDosen from "./pages/AdminDosen";
 import AdminDashboard from "./pages/AdminDashboard";
-import AdminProfile from "./pages/AdminProfile";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -24,7 +23,8 @@ import DosenProfile from "./pages/DosenProfile";
 
 function App() {
   // Anda perlu menentukan tipe pengguna berdasarkan kondisi atau informasi dari backend
-  const userType = "dosen"; // Gantilah dengan tipe pengguna yang sesuai
+  const userType = sessionStorage.getItem("userType");
+  // Gantilah dengan tipe pengguna yang sesuai
 
   return (
     <Router>
@@ -32,11 +32,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
-
       {userType === "mahasiswa" && (
         <SideBar>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/home" element={<Dashboard />} />
             <Route path="/pembimbing" element={<Pembimbing />} />
             <Route path="/progres" element={<Progres />} />
             <Route path="/sidang" element={<Sidang />} />
@@ -51,7 +50,7 @@ function App() {
       {userType === "dosen" && (
         <SideBarDosen>
           <Routes>
-            <Route path="/dashboard" element={<DosenDashboard />} />
+            <Route path="/dosen-home" element={<DosenDashboard />} />
             <Route path="/permintaan" element={<PermintaanPembimbing />} />
             <Route path="/dosenprogres" element={<DosenProgresTA />} />
             <Route path="/dosensidang" element={<DosenSidang />} />
@@ -66,9 +65,8 @@ function App() {
       {userType === "admin" && (
         <SideBarAdmin>
           <Routes>
-            <Route path="/admindashboard" element={<AdminDashboard />} />
+            <Route path="/admin-home" element={<AdminDashboard />} />
             <Route path="/admin" element={<AdminDosen />} />
-            <Route path="/settings/adminprofile" element={<AdminProfile />} />
 
             <Route path="*" element={<>not found</>} />
           </Routes>

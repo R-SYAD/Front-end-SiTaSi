@@ -1,27 +1,71 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Form, Modal } from "react-bootstrap";
 import "../styles/Pembimbing.css";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const Pembimbing = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [selectedPembimbing, setSelectedPembimbing] = useState("");
-  const [dosenList, setDosenList] = useState([]); // Menambah state untuk daftar pembimbing
+  const [dosenList, setDosenList] = useState([]);
   const [judulTugasAkhir, setJudulTugasAkhir] = useState("");
   const [deskripsiTugasAkhir, setDeskripsiTugasAkhir] = useState("");
+  const [status, setStatus] = useState(""); // Menambah state untuk menyimpan status
 
   useEffect(() => {
-    // Ganti URL_API dengan URL endpoint yang sesuai pada backend Anda
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/pilihdosbing");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+        const token = sessionStorage.getItem("accessToken");
+        const tipe = sessionStorage.getItem("userType");
+        if (!token) {
+          console.error("Token tidak ditemukan");
+          return;
         }
-        const data = await response.json();
-        setDosenList(data); // Mengisi daftar pembimbing dari data backend
-        console.log(data);
+
+        // Fetch data dosbing
+        const dosbingResponse = await fetch(
+          "http://localhost:3000/pilihdosbing",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              tipe: `Bearer ${tipe}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!dosbingResponse.ok) {
+          throw new Error("Network response was not ok for dosbing");
+        }
+
+        const dosbingData = await dosbingResponse.json();
+        setDosenList(dosbingData);
+
+        // Fetch data status
+        const statusResponse = await fetch(
+          "http://localhost:3000/tampilstatus",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              tipe: `Bearer ${tipe}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!statusResponse.ok) {
+          throw new Error("Network response was not ok for status");
+        }
+
+        const statusData = await statusResponse.json();
+        setStatus(statusData);
+
+        console.log("Dosen List:", dosbingData);
+        console.log("Status:", statusData);
       } catch (err) {
         console.error("Error fetching data: ", err);
       }
@@ -46,11 +90,14 @@ const Pembimbing = () => {
       idDosbing: selectedPembimbing, // Menyamakan dengan nama req.body di server
       detailIde: deskripsiTugasAkhir,
     };
-
+    const token = sessionStorage.getItem("accessToken");
+    const tipe = sessionStorage.getItem("userType");
     // Konfigurasi request
     const requestOptions = {
       method: "POST", // Ganti dengan metode HTTP yang sesuai (POST, PUT, dll.)
       headers: {
+        Authorization: `Bearer ${token}`,
+        tipe: `Bearer ${tipe}`,
         "Content-Type": "application/json", // Ganti sesuai dengan format data yang Anda kirim
       },
       body: JSON.stringify(formData), // Mengubah data menjadi JSON
@@ -62,17 +109,14 @@ const Pembimbing = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        return response.json(); // Anda dapat menghapus ini jika tidak ada respons yang perlu diproses
+        return response.json();
       })
       .then((data) => {
-        // Response dari server (jika ada)
         console.log(data);
-        // Tambahkan logika untuk menangani respons dari server, seperti menampilkan pesan sukses
       })
       .catch((error) => {
         console.error("Error submitting data: ", error);
         console.log(error);
-        // Tambahkan logika untuk menangani kesalahan, seperti menampilkan pesan kesalahan
       });
   };
 
@@ -128,7 +172,7 @@ const Pembimbing = () => {
           </Form.Group>
           <Form.Group className="mb-3" controlId="formStatus">
             <Form.Label className="form-label">Status</Form.Label>
-            <Form.Control disabled />
+            <Form.Control value={status} disabled />
           </Form.Group>
           {/* Kemudian panggil handleSubmit() pada tombol "Ajukan Pembimbing" onClick seperti ini:*/}
           <Button variant="success" onClick={handleSubmit}>

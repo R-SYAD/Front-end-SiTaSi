@@ -13,7 +13,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 const routes = [
   {
-    path: "/admin-home",
+    path: "/admindashboard",
     name: "Dashboard",
     icon: <HomeIcon />,
   },

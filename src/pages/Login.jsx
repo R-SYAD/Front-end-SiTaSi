@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "../styles/Login.css";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [nomorinduk, setNomorInduk] = useState("");
@@ -36,9 +37,12 @@ const Login = () => {
 
         if (data.success) {
           // Simpan token dan userType dalam sessionStorage
+
+          Cookies.set("accessToken", data.token);
           sessionStorage.setItem("accessToken", data.token);
           sessionStorage.setItem("userType", data.user);
-          console.log(data)
+          sessionStorage.setItem("id", data.nomorinduk);
+          console.log(data);
           // Redirect ke halaman berdasarkan userType
           if (data.user === "mahasiswa") {
             navigate("/home");
