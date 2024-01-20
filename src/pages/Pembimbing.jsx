@@ -13,6 +13,7 @@ const Pembimbing = () => {
   const [judulTugasAkhir, setJudulTugasAkhir] = useState("");
   const [deskripsiTugasAkhir, setDeskripsiTugasAkhir] = useState("");
   const [status, setStatus] = useState(""); // Menambah state untuk menyimpan status
+  const [namaDosbing, setnamaDosbing] = useState(""); // Menambah state untuk menyimpan status
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,10 +63,11 @@ const Pembimbing = () => {
         }
 
         const statusData = await statusResponse.json();
-        setStatus(statusData);
+        setStatus(statusData.status);
+        setnamaDosbing(statusData.namaDosen);
 
-        console.log("Dosen List:", dosbingData);
-        console.log("Status:", statusData);
+        // console.log("Dosen List:", dosbingData);
+        // console.log("Status:", statusData);
       } catch (err) {
         console.error("Error fetching data: ", err);
       }
@@ -94,7 +96,7 @@ const Pembimbing = () => {
     const tipe = sessionStorage.getItem("userType");
     // Konfigurasi request
     const requestOptions = {
-      method: "POST", // Ganti dengan metode HTTP yang sesuai (POST, PUT, dll.)
+      method: "POST", 
       headers: {
         Authorization: `Bearer ${token}`,
         tipe: `Bearer ${tipe}`,
@@ -113,6 +115,7 @@ const Pembimbing = () => {
       })
       .then((data) => {
         console.log(data);
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error submitting data: ", error);
@@ -138,21 +141,24 @@ const Pembimbing = () => {
             <Form.Label className="form-label">Selected Pembimbing</Form.Label>
             <div className="d-flex">
               <span className="mr-2">
-                {selectedPembimbing
-                  ? selectedPembimbing
+                {status.id_dosbing!==null ||selectedPembimbing
+                  ? selectedPembimbing||namaDosbing.nama_dosen
                   : "No Pembimbing selected"}
               </span>
-              <Button variant="primary" onClick={handleShow}>
+              <Button variant="primary" onClick={handleShow} disabled={status.status_judul ==="pengajuan" || status.status_judul ==="accept" }>
                 Add Pembimbing
               </Button>
             </div>
           </Form.Group>
+
+          {/* submit judul serta ide */}
           <Form.Group className="mb-3" controlId="formName">
             <Form.Label className="form-label">Judul Tugas Akhir</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Judul Tugas Akhir"
+              placeholder={status.judul !== null ? status.judul:"Judul Tugas Akhir"}
               value={judulTugasAkhir}
+              disabled={status.status_judul ==="pengajuan" || status.status_judul ==="accept" }
               onChange={(e) => setJudulTugasAkhir(e.target.value)}
               name="judulTugasAkhir" // Tambahkan name untuk mengaitkan dengan req.body
             />
@@ -163,24 +169,24 @@ const Pembimbing = () => {
             </Form.Label>
             <Form.Control
               as="textarea"
-              placeholder="Deskripsi Tugas Akhir"
+              placeholder={status.detail_ide !==null ? status.detail_ide:"Deskripsi Tugas Akhir"}
               name="deskripsiTugasAkhir" // Tambahkan name untuk mengaitkan dengan req.body
               rows={3}
               value={deskripsiTugasAkhir}
-              onChange={(e) => setDeskripsiTugasAkhir(e.target.value)}
+              disabled={status.status_judul ==="pengajuan" || status.status_judul ==="accept" }
+              onChange={(e) => setDeskripsiTugasAkhir(e.target.value)
+              }
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formStatus">
             <Form.Label className="form-label">Status</Form.Label>
-            <Form.Control value={status} disabled />
+            <Form.Control value={status.status_judul} disabled />
           </Form.Group>
-          {/* Kemudian panggil handleSubmit() pada tombol "Ajukan Pembimbing" onClick seperti ini:*/}
+          
           <Button variant="success" onClick={handleSubmit}>
             Ajukan Pembimbing
           </Button>
-          <Button variant="danger" onClick={handleClose}>
-            Cancel
-          </Button>
+              
         </Form>
 
         <Modal show={show} onHide={handleClose}>

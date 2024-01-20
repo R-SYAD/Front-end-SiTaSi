@@ -46,19 +46,24 @@ const Login = () => {
           // Redirect ke halaman berdasarkan userType
           if (data.user === "mahasiswa") {
             navigate("/home");
+            window.location.reload();
           } else if (data.user === "dosen") {
             navigate("/dosen-home");
+            window.location.reload();
           } else if (data.user === "admin") {
             navigate("/admin-home");
+            window.location.reload();
           }
-        } else {
-          setError(data.message);
-        }
-      } else {
-        throw new Error("Network response was not ok");
+        } 
+      } 
+      
+      if(!res.ok) {
+        const errorData = await res.json()
+        setError(errorData.message)
+        console.log(errorData);
       }
     } catch (err) {
-      setError("Network error, please try again later.");
+      console.log(err);
     } finally {
       setIsLoading(false);
     }

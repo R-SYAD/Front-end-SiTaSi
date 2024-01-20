@@ -10,6 +10,7 @@ import Semhas from "./pages/Semhas";
 import Sidang from "./pages/Sidang";
 import DosenDashboard from "./pages/DosenDashboard";
 import AdminDosen from "./pages/AdminDosen";
+import AdminProfile from "./pages/AdminProfile"
 import AdminDashboard from "./pages/AdminDashboard";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
@@ -29,7 +30,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
       {userType === "mahasiswa" && (
@@ -67,6 +68,7 @@ function App() {
           <Routes>
             <Route path="/admin-home" element={<AdminDashboard />} />
             <Route path="/admin" element={<AdminDosen />} />
+            <Route path="/settings/adminprofile" element={<AdminProfile />} />
 
             <Route path="*" element={<>not found</>} />
           </Routes>

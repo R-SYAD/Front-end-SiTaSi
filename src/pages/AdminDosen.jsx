@@ -28,8 +28,17 @@ const AdminDosen = () => {
 
   useEffect(() => {
     try {
+      const token = sessionStorage.getItem("accessToken");
+        const tipe = sessionStorage.getItem("userType");
       // Mengambil data dosen dari backend
-      fetch("http://localhost:3000/listdosen")
+      fetch("http://localhost:3000/listdosen",{
+        method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              tipe: `Bearer ${tipe}`,
+              "Content-Type": "application/json",
+            },
+      })
         .then((response) => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -54,12 +63,15 @@ const AdminDosen = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+    const token = sessionStorage.getItem("accessToken");
+    const tipe = sessionStorage.getItem("userType");
     try {
       const response = await fetch("http://localhost:3000/tambahAkunDosen", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          tipe: `Bearer ${tipe}`,
+          "Content-Type": "application/json", // Ganti sesuai dengan format data yang Anda kirim
         },
         body: JSON.stringify(formData),
       });
@@ -186,7 +198,7 @@ const AdminDosen = () => {
                 <option value="Perempuan">Perempuan</option>
               </Form.Control>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="kuotaDosbing">
+            {/* <Form.Group className="mb-3" controlId="kuotaDosbing">
               <Form.Label>Kuota Dosbing (1-10)</Form.Label>
               <Form.Control
                 type="number"
@@ -197,7 +209,7 @@ const AdminDosen = () => {
                 value={formData.kuotaDosbing}
                 onChange={handleInputChange}
               />
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group className="mb-3" controlId="password">
               <Form.Label>Password</Form.Label>
               <Form.Control
